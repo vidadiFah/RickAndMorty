@@ -50,17 +50,18 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     // Retrofit
-    implementation("com.squareup.retrofit2:retrofit:3.0.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
 
     // GsonConverterFactory
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
     // OkHttp
-    implementation("com.squareup.okhttp3:okhttp:5.3.0")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
 
     // Interceptor
-    implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
-
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    
     // Koin
-    implementation("io.insert-koin:koin-android:4.1.1")
+    implementation(platform("io.insert-koin:koin-bom:3.5.6"))
+    implementation("io.insert-koin:koin-android")
 }

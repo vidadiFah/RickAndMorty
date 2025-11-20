@@ -12,7 +12,19 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:paddingVertical="30dp"
         tools:listitem="@layout/item_character"/>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:indeterminateTint="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="30dp"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

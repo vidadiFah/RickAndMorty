@@ -1,24 +1,28 @@
 package com.example.rickandmorty.di
 
-import android.icu.util.TimeUnit
+import com.example.rickandmorty.data.api.CartoonApi
+import com.example.rickandmorty.data.repository.CharacterRepositoryImpl
+import com.example.rickandmorty.domain.repository.CharacterRepository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
 import org.koin.dsl.module
+import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
-val cartoonModule = module {
+val dataModule = module {
 
     single<Retrofit> {
         Retrofit.Builder()
             .baseUrl("https://rickandmortyapi.com/api/")
             .addConverterFactory(GsonConverterFactory.create())
+            .client(get())
             .build()
     }
 
     single<OkHttpClient> {
         OkHttpClient.Builder()
-            .addInterceptor(interceptor = get())
+            .addInterceptor(interceptor = get<HttpLoggingInterceptor>())
             .connectTimeout(15, TimeUnit.SECONDS)
             .readTimeout(15, TimeUnit.SECONDS)
             .writeTimeout(15, TimeUnit.SECONDS)
@@ -32,5 +36,11 @@ val cartoonModule = module {
         }
     }
 
+    single<CartoonApi> {
+        get<Retrofit>().create(CartoonApi::class.java)
+    }
 
+    single<CharacterRepository> {
+        CharacterRepositoryImpl(api = get())
+    }
 }
