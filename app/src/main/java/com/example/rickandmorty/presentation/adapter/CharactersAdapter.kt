@@ -3,10 +3,13 @@ package com.example.rickandmorty.presentation.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil3.load
 import com.example.rickandmorty.databinding.ItemCharacterBinding
 import com.example.rickandmorty.domain.models.Character
 
-class CharactersAdapter() : RecyclerView.Adapter<CharactersAdapter.CharacterViewHolder>() {
+class CharactersAdapter(
+    val onClick: (id: Int) -> Unit
+) : RecyclerView.Adapter<CharactersAdapter.CharacterViewHolder>() {
 
     private val characters = mutableListOf<Character>()
 
@@ -38,12 +41,19 @@ class CharactersAdapter() : RecyclerView.Adapter<CharactersAdapter.CharacterView
     inner class CharacterViewHolder(private val binding: ItemCharacterBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(character: Character) {
-            binding.tvName.text = character.name
-            binding.tvStatus.text = character.status
-            binding.tvSpecies.text = " - ${character.species}"
-            binding.tvLocation.text = character.location.name
-            binding.tvFirstSeen.text = character.episode.first()
+        fun bind(character: Character) = with(binding) {
+            tvName.text = character.name
+            tvStatus.text = character.status
+            tvSpecies.text = " - ${character.species}"
+            tvLocation.text = character.location.name
+            tvFirstSeen.text = character.episode.first()
+            ivCharacterImage.load(character.image)
+
+            itemView.setOnClickListener {
+                character.id.let {
+                    onClick(it)
+                }
+            }
         }
     }
 }
