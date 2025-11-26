@@ -1,6 +1,7 @@
 package com.example.rickandmorty.data.repository
 
 import com.example.rickandmorty.core.Either
+import com.example.rickandmorty.core.mapEither
 import com.example.rickandmorty.data.api.CartoonApi
 import com.example.rickandmorty.data.base.BaseRepository
 import com.example.rickandmorty.data.mapper.toDomain
@@ -13,14 +14,14 @@ class CharacterRepositoryImpl(
 ) : CharacterRepository, BaseRepository() {
 
     override fun getCharacters() : Flow<Either<String, List<Character>>> {
-        return doRequest2 {
-            api.getCharacters().characters.toDomain()
+        return doRequest { api.getCharacters() }.mapEither {
+            it.characters.toDomain()
         }
     }
 
-    override fun getCharacterByID(id: Int) : Flow<Either<String, Character>> {
-        return doRequest2 {
-            api.getCharacterByID(id).toDomain()
+    override fun getCharacterByID(id: Int): Flow<Either<String, Character>> {
+        return doRequest { api.getCharacterByID(id) }.mapEither {
+            it.toDomain()
         }
     }
 }
